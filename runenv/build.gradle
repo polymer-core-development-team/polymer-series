@@ -1,0 +1,91 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+
+// Make this project depend on all the others
+rootProject.subprojects.forEach(p -> {
+    if (p == project) return
+    evaluationDependsOn p.path
+})
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+minecraft {
+    mappings channel: 'official', version: project.ext.mcversion
+
+    accessTransformer = file('src/main/resources/META-INF/polymer_at.cfg')
+
+    runs {
+        client {
+            workingDirectory rootProject.file('run/client')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+        }
+
+        server {
+            workingDirectory rootProject.file('run/server')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+
+    afterEvaluate {
+        // Add all the mods to the run configurations
+        runs.forEach(run -> {
+            rootProject.subprojects.forEach(p -> {
+                if (p == project) return
+                p.pluginManager.withPlugin('net.minecraftforge.gradle') {
+                    var r = p.minecraft.runs.findByName(run.name)
+                    if (r == null) return
+                    r.mods.forEach(config -> {
+                        run.mods.create(config.name) {
+                            classes = config.classes
+                            sources = config.sources
+                            resources = config.resources
+                        }
+                    })
+                }
+            })
+        })
+    }
+}
+repositories {
+    //copy other repositories
+    def urls = []
+    rootProject.subprojects.forEach { proj ->
+        proj.repositories.forEach { rep ->
+            if (rep instanceof MavenArtifactRepository) {
+                if (!urls.contains(rep.url) && !project.ext.excludeRepositories.contains(rep.name)) {
+                    urls.add(rep.url)
+                    maven {
+                        url = rep.url
+                        name = rep.name
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.ext.mcversion}-${project.ext.forgeversion}"
+
+    // Add all the mods as runtime dependencies
+    rootProject.subprojects.forEach(p -> {
+        if (p == project) return
+        p.pluginManager.withPlugin('net.minecraftforge.gradle') {
+            runtimeOnly p
+        }
+    })
+}

@@ -1,0 +1,13 @@
+rootProject.name = 'polymer-series'
+
+include "polymer-core"
+include "polymer-hinge"
+include "polymer-schematic"
+include "polymer-scripts"
+include "polymer-gui"
+include "polymer-components"
+include "polymer-machine"
+
+
+// This must always be here
+include 'runenv'

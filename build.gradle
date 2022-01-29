@@ -1,0 +1,32 @@
+subprojects { sub ->
+    configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            substitute module("com.polymerteam:polymercore") using project(":polymer-core")
+        }
+    }
+
+    afterEvaluate {
+        //Fix GenIntellijRuns
+        sub.pluginManager.withPlugin('net.minecraftforge.gradle') {
+            sub.minecraft.runs.forEach(run -> {
+                run.ideaModule = "polymer-series.${sub.name}.main"
+            })
+        }
+    }
+}
+
+project('runenv') {
+    ext {
+        mcversion = '1.16.5'
+        forgeversion = '36.2.20'
+        excludeRepositories = ['Curse Maven']
+    }
+    repositories {
+
+    }
+    dependencies {
+        // This is where any additional runtime dependencies for your dev environment go
+    }
+}
+
+

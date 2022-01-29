@@ -1,0 +1,21 @@
+[submodule "polymer-core"]
+	path = polymer-core
+	url = https://github.com/polymer-core-development-team/polymer-core.git
+[submodule "polymer-hinge"]
+	path = polymer-hinge
+	url = https://github.com/polymer-core-development-team/polymer-hinge.git
+[submodule "polymer-schematic"]
+	path = polymer-schematic
+	url = https://github.com/polymer-core-development-team/polymer-schematic
+[submodule "polymer-scripts"]
+	path = polymer-scripts
+	url = https://github.com/polymer-core-development-team/polymer-scripts
+[submodule "polymer-gui"]
+	path = polymer-gui
+	url = https://github.com/polymer-core-development-team/polymer-gui
+[submodule "polymer-components"]
+	path = polymer-components
+	url = https://github.com/polymer-core-development-team/polymer-components
+[submodule "polymer-machine"]
+	path = polymer-machine
+	url = https://github.com/polymer-core-development-team/polymer-machine
