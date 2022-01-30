@@ -1,23 +1,23 @@
 subprojects { sub ->
     configurations.all {
         if (it.name.startsWith("_")) {
-            exclude group: "com.teampolymer", module: "polymer-core"
-            exclude group: "com.teampolymer", module: "polymer-hinge"
-            exclude group: "com.teampolymer", module: "polymer-schematic"
-            exclude group: "com.teampolymer", module: "polymer-scripts"
-            exclude group: "com.teampolymer", module: "polymer-gui"
-            exclude group: "com.teampolymer", module: "polymer-components"
-            exclude group: "com.teampolymer", module: "polymer-machine"
+            exclude group: "com.github.teampolymer", module: "polymer-core"
+            exclude group: "com.github.teampolymer", module: "polymer-hinge"
+            exclude group: "com.github.teampolymer", module: "polymer-schematic"
+            exclude group: "com.github.teampolymer", module: "polymer-scripts"
+            exclude group: "com.github.teampolymer", module: "polymer-gui"
+            exclude group: "com.github.teampolymer", module: "polymer-components"
+            exclude group: "com.github.teampolymer", module: "polymer-machine"
             return
         }
         resolutionStrategy.dependencySubstitution {
-            substitute module("com.teampolymer:polymer-core") using project(":polymer-core")
-            substitute module("com.teampolymer:polymer-hinge") using project(":polymer-hinge")
-            substitute module("com.teampolymer:polymer-schematic") using project(":polymer-schematic")
-            substitute module("com.teampolymer:polymer-scripts") using project(":polymer-scripts")
-            substitute module("com.teampolymer:polymer-gui") using project(":polymer-gui")
-            substitute module("com.teampolymer:polymer-components") using project(":polymer-components")
-            substitute module("com.teampolymer:polymer-machine") using project(":polymer-machine")
+            substitute module("com.github.teampolymer:polymer-core") using project(":polymer-core")
+            substitute module("com.github.teampolymer:polymer-hinge") using project(":polymer-hinge")
+            substitute module("com.github.teampolymer:polymer-schematic") using project(":polymer-schematic")
+            substitute module("com.github.teampolymer:polymer-scripts") using project(":polymer-scripts")
+            substitute module("com.github.teampolymer:polymer-gui") using project(":polymer-gui")
+            substitute module("com.github.teampolymer:polymer-components") using project(":polymer-components")
+            substitute module("com.github.teampolymer:polymer-machine") using project(":polymer-machine")
         }
     }
 
