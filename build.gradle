@@ -14,7 +14,7 @@ subprojects { sub ->
             substitute module("com.teampolymer:polymer-core") using project(":polymer-core")
             substitute module("com.teampolymer:polymer-hinge") using project(":polymer-hinge")
             substitute module("com.teampolymer:polymer-schematic") using project(":polymer-schematic")
-            substitute module("com.teampolymer:polymer-scripts") using project(path: ":api", configuration: "shadow")
+            substitute module("com.teampolymer:polymer-scripts") using project(":polymer-scripts")
             substitute module("com.teampolymer:polymer-gui") using project(":polymer-gui")
             substitute module("com.teampolymer:polymer-components") using project(":polymer-components")
             substitute module("com.teampolymer:polymer-machine") using project(":polymer-machine")
