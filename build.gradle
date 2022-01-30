@@ -29,6 +29,7 @@ subprojects { sub ->
             })
         }
     }
+
 }
 
 project('runenv') {
@@ -43,6 +44,16 @@ project('runenv') {
     dependencies {
         // This is where any additional runtime dependencies for your dev environment go
     }
+
 }
 
 
+task jar {
+    doFirst {
+        rootProject.subprojects { sub ->
+            if (sub.name != 'runenv') {
+                sub.tasks.findByName('jar')?.dependsOn(sub.tasks.named('reobfJar'))
+            }
+        }
+    }
+}
