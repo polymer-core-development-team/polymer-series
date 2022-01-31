@@ -5,10 +5,12 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7.+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
+apply plugin: 'org.spongepowered.mixin'
 
 // Make this project depend on all the others
 rootProject.subprojects.forEach(p -> {
@@ -29,6 +31,9 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            // Allow dependent mixins to run
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
         }
 
         server {
@@ -36,6 +41,9 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            // Allow dependent mixins to run
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
         }
     }
 
@@ -59,6 +67,19 @@ minecraft {
         })
     }
 }
+
+mixin {
+    // Add all the mods as runtime dependencies
+    rootProject.subprojects.forEach(p -> {
+        if (p == project) return
+        if(p.pluginManager.hasPlugin("org.spongepowered.mixin")) {
+            // MixinGradle Settings
+            add p.sourceSets.main, "mixins.${p.name}.refmap.json"
+            config "mixins.${p.name}.json"
+        }
+    })
+}
+
 repositories {
     //copy other repositories
     def urls = []
