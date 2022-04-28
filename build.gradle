@@ -27,6 +27,8 @@ subprojects { sub ->
             sub.minecraft.runs.forEach(run -> {
                 run.ideaModule = "polymer-series.${sub.name}.main"
             })
+
+            sub.minecraft.accessTransformer = rootProject.project('runenv').file('src/main/resources/META-INF/polymer_at.cfg')
         }
     }
 
